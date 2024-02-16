@@ -18,23 +18,22 @@ app.get("/", function (req, res) {
   res.sendFile(__dirname + "/views/index.html");
 });
 
-// const isInValidDate = (date) => date.toUTCString() === "Invalid Date";
+const isInValidDate = (date) => date.toUTCString() === "Invalid Date";
 
-// your first API endpoint...
-// app.get("/api/:date", function (req, res) {
-//   let date = new Date(req.params.date);
-//   if (isInValidDate(date)) {
-//     date = new Date(+req.params.date);
-//   }
-//   if (isInValidDate(date)) {
-//     res.json({ error: "Invalid Date" });
-//     return;
-//   }
-//   res.json({
-//     unix: date.getTime(),
-//     utc: date.toUTCString(),
-//   });
-// });
+app.get("/api/:date", function (req, res) {
+  let date = new Date(req.params.date);
+  if (isInValidDate(date)) {
+    date = new Date(+req.params.date);
+  }
+  if (isInValidDate(date)) {
+    res.json({ error: "Invalid Date" });
+    return;
+  }
+  res.json({
+    unix: date.getTime(),
+    utc: date.toUTCString(),
+  });
+});
 
 app.get("/api", (req, res) => {
   let date = new Date();
@@ -48,13 +47,13 @@ app.get("/api", (req, res) => {
   });
 });
 
-app.get("/api/whoami", (req, res) => {
-  res.json({
-    ipaddress: req.socket.remoteAddress,
-    language: req.headers["Portuguese"],
-    software: req.headers["JavaScript"],
-  });
-});
+// app.get("/api/whoami", (req, res) => {
+//   res.json({
+//     ipaddress: req.socket.remoteAddress,
+//     language: req.headers["accept-language"],
+//     software: req.headers["user-agent"],
+//   });
+// });
 
 // Listen on port set in environment variable or default to 3000
 var listener = app.listen(process.env.PORT || 3000, function () {
